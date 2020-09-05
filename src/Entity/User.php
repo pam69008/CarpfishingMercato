@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -47,12 +49,17 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isCompany;
+    private $company = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phonenumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activationToken;
 
     public function getId(): ?int
     {
@@ -159,22 +166,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return bool|null
+     * @return bool
      */
-    public function getIsCompany(): ?bool
+    public function isCompany(): bool
     {
-        return $this->isCompany;
+        return $this->company;
     }
 
     /**
-     * @param bool $isCompany
-     * @return $this
+     * @param bool $company
      */
-    public function setIsCompany(bool $isCompany): self
+    public function setCompany(bool $company): void
     {
-        $this->isCompany = $isCompany;
-
-        return $this;
+        $this->company = $company;
     }
 
     /**
@@ -210,6 +214,18 @@ class User implements UserInterface
     public function setFirstName($firstName): void
     {
         $this->firstName = $firstName;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(?string $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
     }
 
 }
