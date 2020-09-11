@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My profile{% endblock %}
+{% block body %}
+    <div class="jumbotron">
+        <h1 class="text-center"> {{ user.firstName }} {{ user.lastName }}</h1>
+        <h4>Email: {{ user.email }}</h4>
+        <h4>Numéro de Télephone: {{ user.phoneNumber }}</h4>
+        <img src="{{ '/uploads/images/users/' ~ user.pictureName }}"  class="img-thumbnail" style="width: 90px
+">
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Modifier mon profil</h5>
+                    <p class="card-text">Pour modifier ses informations</p>
+                    <a href="{{ path('modify_profile', {'id': user.id}) }}" class="btn btn-primary">Modifier mon profil</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mes factures</h5>
+                    <p class="card-text">Pour visualiser ses  factures ( imprimer, enregistrer sous format pdf)</p>
+                    <a href="#" class="btn btn-primary">Voir mes factures</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

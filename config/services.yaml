@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    pictures_directory: '%kernel.project_dir%/public/uploads/images'
+    app.path.image_users: /uploads/images/users
+    image_user_upload: '%kernel.project_dir%/public%app.path.image_users%'
 
 services:
     # default configuration for services in *this* file
@@ -26,6 +29,16 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+    App\Services\MailServices:
+        arguments:
+            $sender: '%env(MAILER_SENDER)%'
+            $contactEmail: '%env(MAILER_CONTACT)%'
+    App\Helper\MailHelper:
+        autowire: true
+        autoconfigure: false
+        arguments:
+            $prefix: '%env(SUBJECT_PREFIX)%'
+            $sender: '%env(MAILER_SENDER)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer mon compte{% endblock %}
+
+{% block body %}
+    <h1>Modifier mon profile</h1>
+
+    {{ include('user/_form.html.twig', {'button_label': 'Mise a jour'}) }}
+
+    <a href="{{ path('profile') }}" class=" btn-lg btn-success"> Retourner à mon compte</a>
+
+{% endblock %}
