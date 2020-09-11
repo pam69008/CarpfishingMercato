@@ -42,7 +42,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add( 'company', CheckboxType::class)
+            ->add( 'company')
             ->add('firstName')
             ->add('lastName')
         ;

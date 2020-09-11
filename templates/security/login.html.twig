@@ -17,17 +17,15 @@
             <div class="container-login100">
                 <div class="wrap-login100">
                     <div class="login100-form-title">
-					<span class="login100-form-title-1">
-						Connexion
-					</span>
+					<h1 class="text-center"> Connexion</h1>
                     </div>
 
                     <label for="inputEmail">Email: </label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control offset-1 col-10"
                            required
                            autofocus>
                     <label for="inputPassword">Mot de passe: </label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" required>
+                    <input type="password" name="password" id="inputPassword" class="form-control offset-1 col-10" required>
 
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
@@ -44,7 +42,7 @@
                         </div>
                     #}
                     <div class="container-login100-form-btn">
-                        <button class="btn btn-lg btn-primary" type="submit">
+                        <button class="btn-lg btn-success " type="submit">
                             Sign in
                         </button>
                     </div>

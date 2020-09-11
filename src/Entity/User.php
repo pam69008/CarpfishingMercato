@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -60,6 +62,17 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $activationToken;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="users")
+     */
+    private $pictures;
+
+    public function __construct()
+    {
+        $this->pictures = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -228,4 +241,34 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Collection|Pictures[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Pictures $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Pictures $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            // set the owning side to null (unless already changed)
+            if ($picture->getUsers() === $this) {
+                $picture->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
 }

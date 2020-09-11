@@ -68,7 +68,7 @@ class RegistrationController extends AbstractController
     public function activation($token, UserRepository $users)
     {
         // On recherche si un utilisateur avec ce token existe dans la base de données
-        $user = $users->findOneBy(['activation_token' => $token]);
+        $user = $users->findOneBy(['activationToken' => $token]);
 
         // Si aucun utilisateur n'est associé à ce token
         if(!$user){
@@ -86,6 +86,6 @@ class RegistrationController extends AbstractController
         $this->addFlash('message', 'Utilisateur activé avec succès');
 
         // On retourne à l'accueil
-        return $this->redirectToRoute('accueil');
+        return $this->redirectToRoute('home');
     }
 }
