@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
 use mysql_xdevapi\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -53,5 +56,38 @@ class SecurityController extends AbstractController
         } else {
             return $this->render('profile/company_profile.html.twig', ['user' => $userLog]);
         }
+    }
+
+    /**
+     * @Route ("/profile/{id}/edit", name = "modify_profile")
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function modifyProfile(Request $request, User $user): Response {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['pictures']->getData();
+            if ($file) {
+                $fileName = 'Image' .$user->getId() . '.' . $file->guessExtension();
+//                 moves the file to the directory where brochures are stored
+                $destination = $this->getParameter('image_user_upload');
+                $file->move(
+                    $destination,
+                    $fileName
+                );
+
+                // updates the 'brochure' property to store the PDF file name
+                // instead of its contents
+                $user->setPictureName($fileName);
+            }
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('profile');
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 }

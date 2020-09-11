@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticlesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Articles
      * @ORM\Column(type="boolean")
      */
     private $outOfPrint;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="articles")
+     */
+    private $picture;
+
+    public function __construct()
+    {
+        $this->picture = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,37 @@ class Articles
     public function setOutOfPrint(bool $outOfPrint): self
     {
         $this->outOfPrint = $outOfPrint;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pictures[]
+     */
+    public function getPicture(): Collection
+    {
+        return $this->picture;
+    }
+
+    public function addPicture(Pictures $picture): self
+    {
+        if (!$this->picture->contains($picture)) {
+            $this->picture[] = $picture;
+            $picture->setArticles($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Pictures $picture): self
+    {
+        if ($this->picture->contains($picture)) {
+            $this->picture->removeElement($picture);
+            // set the owning side to null (unless already changed)
+            if ($picture->getArticles() === $this) {
+                $picture->setArticles(null);
+            }
+        }
 
         return $this;
     }

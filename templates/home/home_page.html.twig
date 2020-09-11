@@ -1,17 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block title %}Accueil{% endblock %}
 {% block body %}
-    <nav class="nav offset-9">
-        {% if app.user %}
-            <a class="nav-link active" href="{{ path('profile') }}">Mon compte</a>
-            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-        {% else %}
-            <a class="nav-link" href="{{ path('app_login') }}">Se Connecter</a>
-            <a class="nav-link" href="{{ path('app_register') }}">S'enregistrer</a>
-        {% endif %}
-    </nav>
-    <div class="jumbotron">
-            <h1 class="text-center">CARPFISHING SHOP</h1>
-    </div>
 
 {% endblock %}
