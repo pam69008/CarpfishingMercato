@@ -2,7 +2,7 @@
 {% block title %}Accueil{% endblock %}
 {% block body %}
         <div class="container">
-            <img src="{{ '/img/snout.jpeg' }}" alt=""  style="width: 90%"/>
+            <img src="{{ '/img/snout.jpeg' }}" alt=""  style="width: 90%" class="img-fluid"/>
         </div>
         <header class="special text-center">
             <h2> Bienvenue sur le site SNOUT <br>
@@ -17,7 +17,7 @@
             <div class="row mb-5 justify-content-center">
                 <div class="col-md-8 text-center">
                     <h2 class="section-title mb-3 mt-2" data-aos="fade-up" data-aos-delay="" style="color: whitesmoke">
-                        <button class="btn-dark">Continuer vers la boutique</button>
+                        <a class=" btn btn-dark" href="{{ path('shop') }}">Continuer vers la boutique</a>
                         </h2>
                     <p class="lead" data-aos="fade-up" data-aos-delay="100">
                 </div>

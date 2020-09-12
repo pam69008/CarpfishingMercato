@@ -9,15 +9,17 @@
         {% endblock %}
     </head>
     <body>
-    <nav class="nav offset-9">
+    <nav class="nav offset-8">
         {% if app.user %}
-            <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+            <a class="nav-link active" href="{{ path('home') }}">Accueil</a>
             <a class="nav-link active" href="{{ path('profile') }}">Mon compte</a>
-            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+            <a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a>
+            <a class="nav-link active" href="{{ path('home') }}">Contact</a>
         {% else %}
-            <a class="nav-link" href="{{ path('home') }}">Accueil</a>
-            <a class="nav-link" href="{{ path('app_login') }}">Se Connecter</a>
-            <a class="nav-link" href="{{ path('app_register') }}">S'enregistrer</a>
+            <a class="nav-link active" href="{{ path('home') }}">Accueil</a>
+            <a class="nav-link active" href="{{ path('app_login') }}">Se Connecter</a>
+            <a class="nav-link active" href="{{ path('app_register') }}">S'enregistrer</a>
+            <a class="nav-link active" href="{{ path('home') }}">Contact</a>
         {% endif %}
     </nav>
         {% block body %}
